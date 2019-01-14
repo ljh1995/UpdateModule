@@ -120,17 +120,33 @@ public class InitActivity extends AppCompatActivity {
         });
     }
     private void showDialog(final AppResult appResult) {
-        new CommomDialog(InitActivity.this, R.style.dialog, appResult.getUpgradeinfo(), new CommomDialog.OnCloseListener() {
-            @Override
-            public void onClick(Dialog dialog, boolean confirm) {
-                if (confirm == true){
-                    UpdateManager manager = new UpdateManager(InitActivity.this,appResult.getUpdateurl());
-                    manager.showDownloadDialog();
-                }else {
-                    jumpLoginActivity();
+        if (appResult.getLastforce().equals("0")){
+            new CommomDialog(InitActivity.this, R.style.dialog, appResult.getUpgradeinfo(),true, new CommomDialog.OnCloseListener() {
+                @Override
+                public void onClick(Dialog dialog, boolean confirm) {
+                    if (confirm == true){
+                        UpdateManager manager = new UpdateManager(InitActivity.this,appResult.getUpdateurl());
+                        manager.showDownloadDialog();
+                    }else {
+                        jumpLoginActivity();
+                    }
+                    dialog.dismiss();
                 }
-                dialog.dismiss();
-            }
-        }).setTitle("发现新的版本").show();
+            }).setTitle("发现新的版本").show();
+        }else if (appResult.getLastforce().equals("1")){
+            new CommomDialog(InitActivity.this, R.style.dialog, appResult.getUpgradeinfo(),false, new CommomDialog.OnCloseListener() {
+                @Override
+                public void onClick(Dialog dialog, boolean confirm) {
+                    if (confirm == true){
+                        UpdateManager manager = new UpdateManager(InitActivity.this,appResult.getUpdateurl());
+                        manager.showDownloadDialog();
+                    }else {
+                        jumpLoginActivity();
+                    }
+                    dialog.dismiss();
+                }
+            }).setTitle("发现新的版本").show();
+        }
+
     }
 }

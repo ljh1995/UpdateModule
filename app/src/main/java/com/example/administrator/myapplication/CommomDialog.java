@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -17,6 +18,7 @@ private TextView contentTxt;
 private TextView titleTxt;
 private TextView submitTxt;
 private TextView cancelTxt;
+private LinearLayout Linercancel;
 
 private Context mContext;
 private String content;
@@ -24,6 +26,7 @@ private OnCloseListener listener;
 private String positiveName;
 private String negativeName;
 private String title;
+private boolean flag;
 
 public CommomDialog(Context context) {
         super(context);
@@ -36,10 +39,11 @@ public CommomDialog(Context context, int themeResId, String content) {
         this.content = content;
         }
 
-public CommomDialog(Context context, int themeResId, String content, OnCloseListener listener) {
+public CommomDialog(Context context, int themeResId, String content,boolean flag, OnCloseListener listener) {
         super(context, themeResId);
         this.mContext = context;
         this.content = content;
+        this.flag = flag;
         this.listener = listener;
         }
 
@@ -77,6 +81,7 @@ private void initView(){
         submitTxt = (TextView)findViewById(R.id.submit);
         submitTxt.setOnClickListener(this);
         cancelTxt = (TextView)findViewById(R.id.cancel);
+        Linercancel = (LinearLayout)findViewById(R.id.liner_canael);
         cancelTxt.setOnClickListener(this);
 
         contentTxt.setText(content);
@@ -92,6 +97,11 @@ private void initView(){
         titleTxt.setText(title);
         }
 
+        if (flag == true){
+                Linercancel.setVisibility(View.VISIBLE);
+        }else {
+                Linercancel.setVisibility(View.GONE);
+        }
         }
 
 @Override
