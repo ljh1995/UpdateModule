@@ -1,10 +1,15 @@
-apply plugin: 'com.android.application'
+//apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+// add these
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.ljh1995' // ××××代表你github名字
+
 
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "com.example.administrator.myapplication"
+//        applicationId "com.example.administrator.myapplication"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
