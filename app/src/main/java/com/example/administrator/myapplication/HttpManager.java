@@ -19,9 +19,9 @@ public class HttpManager {
     /**
      * 解析返回的结果--分页
      */
-    public static void getDataPagingInfo(final Context cxt, String packagename,int VersionCode,String AppName, final HttpRequestHandler<Result> handler) {
-
-        String ip_adress = "http://192.168.0.128:8086/update/updateapk";
+    public static void getDataPagingInfo(final Context cxt, String packagename,int VersionCode,String AppName,String URL, final HttpRequestHandler<Result> handler) {
+        String ip_adress = URL + "/update/update/updateapk";
+//        String ip_adress = "http://192.168.0.128:8086/update/update/updateapk";
         Log.i(TAG, "ip_adress=" + ip_adress);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();

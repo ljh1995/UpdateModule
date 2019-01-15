@@ -31,7 +31,7 @@ import java.util.HashMap;
  */
 
 public class UpdateManager {
-    String downloaUrl;
+    String downloaUrl,URL;
     /* 下载中 */
     private static final int DOWNLOAD = 1;
     /* 下载结束 */
@@ -70,10 +70,11 @@ public class UpdateManager {
         };
     };
 
-    public UpdateManager(Context context,String downloaUrl)
+    public UpdateManager(Context context,String downloaUrl,String URL)
     {
         this.mContext = context;
         this.downloaUrl = downloaUrl;
+        this.URL = URL;
     }
     /**
      * 显示软件下载对话     */
@@ -133,7 +134,7 @@ public class UpdateManager {
                     // 获得存储卡的路径
                     String sdpath = Environment.getExternalStorageDirectory() + "/";
                     mSavePath = sdpath + "download";
-                    String updateurl = "http://192.168.0.128:8086/download/" + downloaUrl;
+                    String updateurl = URL + "/download/update/" + downloaUrl;
                     URL url = new URL(updateurl);
                     // 创建连接
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();

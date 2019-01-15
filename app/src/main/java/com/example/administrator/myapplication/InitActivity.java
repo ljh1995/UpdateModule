@@ -90,7 +90,7 @@ public class InitActivity extends AppCompatActivity {
         packagename = PackageUtils.getPackageName(this);
         VersionCode = PackageUtils.getVersionCode(this);
         AppName = PackageUtils.getAppName(this);
-        UpdateUtils updateUtils = new UpdateUtils(this,packagename,AppName,VersionCode);
+        UpdateUtils updateUtils = new UpdateUtils(this,packagename,AppName,VersionCode,"");
         updateUtils.update(new CallBack() {
             @Override
             public void callback(Result result) {
@@ -112,7 +112,7 @@ public class InitActivity extends AppCompatActivity {
                 @Override
                 public void onClick(Dialog dialog, boolean confirm) {
                     if (confirm == true){
-                        UpdateManager manager = new UpdateManager(InitActivity.this,appResult.getUpdateurl());
+                        UpdateManager manager = new UpdateManager(InitActivity.this,appResult.getUpdateurl(),"");
                         manager.showDownloadDialog();
                     }else {
                         jumpLoginActivity();
@@ -125,7 +125,7 @@ public class InitActivity extends AppCompatActivity {
                 @Override
                 public void onClick(Dialog dialog, boolean confirm) {
                     if (confirm == true){
-                        UpdateManager manager = new UpdateManager(InitActivity.this,appResult.getUpdateurl());
+                        UpdateManager manager = new UpdateManager(InitActivity.this,appResult.getUpdateurl(),"");
                         manager.showDownloadDialog();
                     }else {
                         jumpLoginActivity();

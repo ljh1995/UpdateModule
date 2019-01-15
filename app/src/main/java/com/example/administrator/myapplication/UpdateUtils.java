@@ -17,20 +17,20 @@ import java.util.ArrayList;
 
 public class UpdateUtils {
     private Context mContext;
-    private String clazz;
-    private String packagename,AppName;
+    private String packagename,AppName,URL;
     private int VersionCode;
 
-    public UpdateUtils(Context context, String packagename, String AppName, int VersionCode)
+    public UpdateUtils(Context context, String packagename, String AppName, int VersionCode,String URL)
     {
         this.mContext = context;
         this.packagename = packagename;
         this.AppName = AppName;
         this.VersionCode = VersionCode;
+        this.URL = URL;
     }
     public void update(final CallBack callBack) {
 
-        HttpManager.getDataPagingInfo(mContext, packagename, VersionCode, AppName, new HttpRequestHandler<Result>() {
+        HttpManager.getDataPagingInfo(mContext, packagename, VersionCode, AppName,URL, new HttpRequestHandler<Result>() {
             @Override
             public void onSuccess(Result data) {
                 if(data != null){
