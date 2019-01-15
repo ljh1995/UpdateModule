@@ -213,7 +213,8 @@ public class UpdateManager {
                 boolean hasInstallPermission = mContext.getPackageManager().canRequestPackageInstalls();
                 if (!hasInstallPermission) {
                     Toast.makeText(mContext, "请手动开启安装权限", Toast.LENGTH_SHORT).show();
-                    intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+                    Uri packageURI = Uri.parse("package:"+ PackageUtils.getPackageName(mContext));
+                    intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageURI);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
             }
@@ -226,9 +227,6 @@ public class UpdateManager {
         if (mContext.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
             mContext.startActivity(intent);
         }
-//        Intent intent = new Intent(Intent.ACTION_VIEW);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
-//        mContext.startActivity(intent);
+
     }
 }

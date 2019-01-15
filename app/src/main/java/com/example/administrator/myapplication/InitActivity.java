@@ -38,13 +38,14 @@ public class InitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
 
-//        mPermissionsChecker = new PermissionsChecker(this);
+        mPermissionsChecker = new PermissionsChecker(this);
 
     }
     class splashhandler implements Runnable {
 
         public void run() {
-            jumpLoginActivity();
+            update();
+//            jumpLoginActivity();
         }
 
     }
@@ -62,15 +63,14 @@ public class InitActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // 缺少权限时, 进入权限配置页面
-//        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-//            startPermissionsActivity();
-//        } else {
-//            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//            Handler x = new Handler();
-//            x.postDelayed(new splashhandler(), 2000);
-//        }
-        update();
+//         缺少权限时, 进入权限配置页面
+        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            startPermissionsActivity();
+        } else {
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            Handler x = new Handler();
+            x.postDelayed(new splashhandler(), 2000);
+        }
 
     }
 
@@ -90,38 +90,21 @@ public class InitActivity extends AppCompatActivity {
         packagename = PackageUtils.getPackageName(this);
         VersionCode = PackageUtils.getVersionCode(this);
         AppName = PackageUtils.getAppName(this);
-        String activityName = "com.example.administrator.myapplication.MainActivity";
-        UpdateUtils updateUtils = new UpdateUtils(this,packagename,AppName,VersionCode,activityName);
-        updateUtils.update();
-//        HttpManager.getDataPagingInfo(this, packagename, VersionCode, AppName, new HttpRequestHandler<Result>() {
-//            @Override
-//            public void onSuccess(Result data) {
-//                 if(data != null){
-//                    if (data.getCode() == 200){
-//                        ArrayList<AppResult> appResultlist = JSONObject.parseObject(String.valueOf(data.getObject()), new TypeReference<ArrayList<AppResult>>() {});
-//                        AppResult appResult = appResultlist.get(0);
-//                        showDialog(appResult);
-//
-//                    }else if (data.getCode() == 100){
-//                        Toast.makeText(InitActivity.this,data.getMessage(), Toast.LENGTH_SHORT).show();
-//                        jumpLoginActivity();
-//                    }else if (data.getCode() == 999){
-//                        Toast.makeText(InitActivity.this,data.getMessage(), Toast.LENGTH_SHORT).show();
-//                        jumpLoginActivity();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onSuccess(Result data, int totalPages, int currentPage) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(String error) {
-//                Toast.makeText(InitActivity.this,error.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        UpdateUtils updateUtils = new UpdateUtils(this,packagename,AppName,VersionCode);
+        updateUtils.update(new CallBack() {
+            @Override
+            public void callback(Result result) {
+                if (result.getCode() == 200){
+                    showDialog((AppResult) result.getObject());
+                }else if (result.getCode() == 100){
+                    Toast.makeText(InitActivity.this,result.getMessage(), Toast.LENGTH_SHORT).show();
+                    jumpLoginActivity();
+                }else {
+                    Toast.makeText(InitActivity.this,result.getMessage(), Toast.LENGTH_SHORT).show();
+                    jumpLoginActivity();
+                }
+            }
+        });
     }
     private void showDialog(final AppResult appResult) {
         if (appResult.getLastforce().equals("0")){
