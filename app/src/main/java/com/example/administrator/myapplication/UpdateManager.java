@@ -205,7 +205,7 @@ public class UpdateManager {
             intent.setAction("android.intent.action.VIEW");
             intent.addCategory("android.intent.category.DEFAULT");
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            contentUri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".provider", apkfile);
+            contentUri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".fileProvider", apkfile);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //兼容8.0

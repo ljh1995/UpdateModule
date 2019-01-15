@@ -71,6 +71,7 @@ public class InitActivity extends AppCompatActivity {
 //            x.postDelayed(new splashhandler(), 2000);
 //        }
         update();
+
     }
 
     private void startPermissionsActivity() {
@@ -89,35 +90,38 @@ public class InitActivity extends AppCompatActivity {
         packagename = PackageUtils.getPackageName(this);
         VersionCode = PackageUtils.getVersionCode(this);
         AppName = PackageUtils.getAppName(this);
-        HttpManager.getDataPagingInfo(this, packagename, VersionCode, AppName, new HttpRequestHandler<Result>() {
-            @Override
-            public void onSuccess(Result data) {
-                 if(data != null){
-                    if (data.getCode() == 200){
-                        ArrayList<AppResult> appResultlist = JSONObject.parseObject(String.valueOf(data.getObject()), new TypeReference<ArrayList<AppResult>>() {});
-                        AppResult appResult = appResultlist.get(0);
-                        showDialog(appResult);
-
-                    }else if (data.getCode() == 100){
-                        Toast.makeText(InitActivity.this,data.getMessage(), Toast.LENGTH_SHORT).show();
-                        jumpLoginActivity();
-                    }else if (data.getCode() == 999){
-                        Toast.makeText(InitActivity.this,data.getMessage(), Toast.LENGTH_SHORT).show();
-                        jumpLoginActivity();
-                    }
-                }
-            }
-
-            @Override
-            public void onSuccess(Result data, int totalPages, int currentPage) {
-
-            }
-
-            @Override
-            public void onFailure(String error) {
-                Toast.makeText(InitActivity.this,error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        String activityName = "com.example.administrator.myapplication.MainActivity";
+        UpdateUtils updateUtils = new UpdateUtils(this,packagename,AppName,VersionCode,activityName);
+        updateUtils.update();
+//        HttpManager.getDataPagingInfo(this, packagename, VersionCode, AppName, new HttpRequestHandler<Result>() {
+//            @Override
+//            public void onSuccess(Result data) {
+//                 if(data != null){
+//                    if (data.getCode() == 200){
+//                        ArrayList<AppResult> appResultlist = JSONObject.parseObject(String.valueOf(data.getObject()), new TypeReference<ArrayList<AppResult>>() {});
+//                        AppResult appResult = appResultlist.get(0);
+//                        showDialog(appResult);
+//
+//                    }else if (data.getCode() == 100){
+//                        Toast.makeText(InitActivity.this,data.getMessage(), Toast.LENGTH_SHORT).show();
+//                        jumpLoginActivity();
+//                    }else if (data.getCode() == 999){
+//                        Toast.makeText(InitActivity.this,data.getMessage(), Toast.LENGTH_SHORT).show();
+//                        jumpLoginActivity();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onSuccess(Result data, int totalPages, int currentPage) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(String error) {
+//                Toast.makeText(InitActivity.this,error.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
     private void showDialog(final AppResult appResult) {
         if (appResult.getLastforce().equals("0")){
